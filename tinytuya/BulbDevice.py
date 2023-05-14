@@ -273,6 +273,25 @@ class BulbDevice(Device):
         data = self._send_receive(payload, getresponse=(not nowait))
         return data
 
+    def send_scene(self, scene, nowait=False):
+        """
+        Send a customised
+
+        Args:
+            scene(str): String representation of the scene
+            nowait(bool): True to send without waiting for response.
+        """
+        if len(scene) > 210:
+            return error_json(
+                ERR_RANGE, "send_scene: Max scene length is 840 bytes (210 hex characters)."
+            )
+        payload = self.generate_payload(
+            CONTROL, {self.DPS_INDEX_SCENE[self.bulb_type]: scene}
+        )
+        # TODO: Tested only with v3.3 Spot lamp
+        data = self._send_receive(payload, getresponse=(not nowait))
+        return data
+
     def set_scene(self, scene, nowait=False):
         """
         Set to scene mode
