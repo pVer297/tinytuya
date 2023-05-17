@@ -36,7 +36,8 @@ class SceneFrame(object):
         return value
 
     def get_data(self) -> str:
-        return f"{int((10.5 - self.TransitionSpeed) * 0xA0A):0{4}x}" \
+        base = 10.5 if self.Transition == 1 else 11.0
+        return f"{int((base - self.TransitionSpeed) * 0xA0A):0{4}x}" \
                f"{self.Transition:0{2}x}" \
                f"{self.Hue:0{4}x}" \
                f"{self.Saturation:0{4}x}" \
